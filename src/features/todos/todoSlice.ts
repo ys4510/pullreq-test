@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TodoId, Todo, TodoInput } from "../../app/types";
+import { v4 as uuid4 } from "uuid";
+import getCurrentDateTime from "./utils/getCurrentDateTime";
 
 export type TodoState = {
   todos: Todo[];
@@ -9,11 +11,11 @@ export type TodoState = {
 const initialState: TodoState = {
   todos: [
     {
-      id: "123",
+      id: uuid4(),
       title: "aaa",
       body: "aaa",
       status: "pending",
-      createdAt: "",
+      createdAt: getCurrentDateTime(),
       updatedAt: "",
       deletedAt: "",
     },
@@ -25,7 +27,17 @@ export const todoSlice = createSlice({
   initialState,
   reducers: {
     create: (state, action: PayloadAction<TodoInput>) => {
-      console.log('hey you', action.payload.title, action.payload.body);
+      console.log("hey you", action.payload.title, action.payload.body);
+      const newTodo: Todo = {
+        id: uuid4(),
+        title: action.payload.title,
+        body: action.payload.body,
+        status: "waiting",
+        createdAt: getCurrentDateTime(),
+        updatedAt: "",
+        deletedAt: "",
+      };
+      state.todos.push(newTodo);
     },
     update: (state) => {},
     restore: (state) => {},

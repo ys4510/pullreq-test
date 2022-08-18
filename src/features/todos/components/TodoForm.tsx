@@ -8,8 +8,8 @@ const TodoForm: FC = () => {
   const dispatch = useAppDispatch();
 
   const handleOnCreate = () => {
-    console.log('haha')
-    dispatch(create({title: 'GGG', body: 'BODY!!!'}));
+    dispatch(create({title:titleInput, body: bodyInput}));
+    
   };
 
   return (
