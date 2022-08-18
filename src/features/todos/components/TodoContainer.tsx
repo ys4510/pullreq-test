@@ -1,9 +1,12 @@
-import React, { FC } from 'react'
+import { FC } from "react";
+import TodoForm from "./TodoForm";
 
 const TodoContainer: FC = () => {
   return (
-    <div>TodoContainer</div>
-  )
-}
+    <>
+      <TodoForm />
+    </>
+  );
+};
 
-export default TodoContainer
+export default TodoContainer;

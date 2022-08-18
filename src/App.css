@@ -4,3 +4,11 @@
   padding: 2rem;
   text-align: center;
 }
+
+#todoForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+  align-items: center;
+}

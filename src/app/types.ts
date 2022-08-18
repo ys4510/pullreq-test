@@ -3,8 +3,13 @@ export type TodoId = string;
 export type DateTime = string;
 
 const TODO_STATUSES = [
-  "working", "pending", "completed"];
-export type TodoStatus = typeof TODO_STATUSES;
+  "waiting",
+  "working",
+  "pending",
+  "discontinued",
+  "completed",
+] as const;
+type TodoStatus = typeof TODO_STATUSES[number];
 
 export type Todo = {
   id: TodoId;

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { TodoId, Todo } from "../../app/types";
+import { TodoId, Todo, TodoInput } from "../../app/types";
 
 export type TodoState = {
   todos: Todo[];
@@ -24,11 +24,13 @@ export const todoSlice = createSlice({
   name: "todo",
   initialState,
   reducers: {
-    create: (state) => {},
+    create: (state, action: PayloadAction<TodoInput>) => {
+      console.log('hey you', action.payload.title, action.payload.body);
+    },
     update: (state) => {},
     restore: (state) => {},
   },
 });
 
-export const {create, update, restore } = todoSlice.actions;
+export const { create, update, restore } = todoSlice.actions;
 export default todoSlice.reducer;
