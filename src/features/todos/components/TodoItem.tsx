@@ -26,8 +26,8 @@ const TodoItem: FC<Props> = ({ todo }) => {
       <td>{todo.body}</td>
       <td>{todo.status}</td>
       <td>{todo.createdAt}</td>
-      <td>{todo.updatedAt}</td>
-      <td>{todo.deletedAt}</td>
+      <td>{todo.updatedAt ? todo.updatedAt : "なし" }</td>
+      <td>{todo.deletedAt? todo.deletedAt : "なし" }</td>
       <td>
         <button onClick={handleOnClickUpdate} disabled={todo.deletedAt ? true : false}>更新</button>
       </td>
