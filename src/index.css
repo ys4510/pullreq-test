@@ -45,3 +45,17 @@ label > span {
 label > input {
   width: 150px;
 }
+
+th {
+  font-size: .9rem;
+  font-weight: 400;
+  background-color:  rgba(32, 178, 170, .8);
+  border-bottom: 1px solid lightseagreen;
+  border-right: 1px solid lightseagreen;
+}
+
+td {
+  border-bottom: 1px solid rgba(32, 178, 170, .8);
+  border-right: 1px solid  rgba(32, 178, 170, .8);
+
+}

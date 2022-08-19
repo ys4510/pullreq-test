@@ -25,3 +25,8 @@ export type TodoInput = {
   title: string;
   body: string;
 };
+
+export type TodoUpdate = {
+  id: TodoId,
+  input: Partial<Todo>
+}

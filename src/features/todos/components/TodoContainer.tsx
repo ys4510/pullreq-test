@@ -1,10 +1,12 @@
 import { FC } from "react";
 import TodoForm from "./TodoForm";
+import TodoList from './TodoList'
 
 const TodoContainer: FC = () => {
   return (
     <>
       <TodoForm />
+      <TodoList />
     </>
   );
 };
