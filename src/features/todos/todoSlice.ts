@@ -57,14 +57,19 @@ export const todoSlice = createSlice({
       state.todos.push(newTodo);
     },
     update: (state, action: PayloadAction<Todo>) => {
-      const index = state.todos.findIndex(todo => action.payload.id === todo.id)
+      const index = state.todos.findIndex(
+        (todo) => action.payload.id === todo.id
+      );
       state.todos[index] = action.payload;
     },
     remove: (state, action: PayloadAction<TodoId>) => {
-      console.log("remove", action.payload);
-      console.log(state.todos);
+      const index = state.todos.findIndex((todo) => action.payload === todo.id);
+      state.todos[index].deletedAt = getCurrentDateTime();
     },
-    restore: (state) => {},
+    restore: (state, action: PayloadAction<TodoId>) => {
+      const index = state.todos.findIndex((todo) => action.payload === todo.id);
+      state.todos[index].deletedAt = "";
+    },
   },
 });
 

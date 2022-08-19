@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useAppDispatch } from "../../../app/hooks";
 import { Todo, TodoUpdate } from "../types";
-import { update, remove } from "../todoSlice";
+import { update, remove, restore } from "../todoSlice";
 import getCurrentDateTime from "../utils/getCurrentDateTime";
 
 type Props = {
@@ -13,10 +13,12 @@ const TodoItem: FC<Props> = ({ todo }) => {
   const dispatch = useAppDispatch();
 
   const handleOnClickUpdate = () => {
-    console.log(todo.title);
     dispatch(update({...todo, updatedAt: getCurrentDateTime()}));
   };
 
+  const handleOnClickDelete = () => {
+    dispatch(remove(todo.id));
+  }
   return (
     <tr>
       <td>{todo.id}</td>
@@ -27,10 +29,16 @@ const TodoItem: FC<Props> = ({ todo }) => {
       <td>{todo.updatedAt}</td>
       <td>{todo.deletedAt}</td>
       <td>
-        <button onClick={handleOnClickUpdate}>更新</button>
+        <button onClick={handleOnClickUpdate} disabled={todo.deletedAt ? true : false}>更新</button>
       </td>
-      <td>
+      <td>{
+        todo.deletedAt 
+        ?
+        <button onClick={() => dispatch(restore(todo.id))}>削除取消</button>
+        :
         <button onClick={() => dispatch(remove(todo.id))}>削除</button>
+
+        }
       </td>
     </tr>
   );
