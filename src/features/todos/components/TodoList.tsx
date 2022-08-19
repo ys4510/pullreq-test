@@ -1,6 +1,6 @@
-import  { FC } from "react";
+import { FC } from "react";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { update , remove} from "../todoSlice";
+import { update, remove } from "../todoSlice";
 import TodoItem from "./TodoItem";
 
 const TodoList: FC = () => {
@@ -10,6 +10,17 @@ const TodoList: FC = () => {
   return (
     <div>
       <hr />
+      <label>
+        <span>閲覧フラグ：</span>
+        <select name="viewFlag" defaultValue={"explanation"}>
+          <option value={"explanation"} disabled>
+            -- 選択してください --
+          </option>
+          <option value={"all"}>全て（削除済みを除く）</option>
+          <option value={"updated"}>更新済み（削除済みを除く）</option>
+          <option value={"deleted"}>削除済み</option>
+        </select>
+      </label>
       <table>
         <thead>
           <tr>
@@ -26,9 +37,8 @@ const TodoList: FC = () => {
         </thead>
         <tbody>
           {todos.map((todo, index) => (
-           <TodoItem key={index} todo={todo} />
+            <TodoItem key={index} todo={todo} />
           ))}
-
         </tbody>
       </table>
     </div>
