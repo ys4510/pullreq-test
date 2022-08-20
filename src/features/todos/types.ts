@@ -27,6 +27,9 @@ export type TodoInput = {
 };
 
 export type TodoUpdate = {
-  id: TodoId,
-  input: Partial<Todo>
-}
+  id: TodoId;
+  input: Partial<Todo>;
+};
+
+const VIEW_STATUSES = ["all", "updated", "deleted"] as const;
+export type ViewFlag = typeof VIEW_STATUSES[number];

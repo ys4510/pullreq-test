@@ -1,18 +1,30 @@
 import { FC } from "react";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { update, remove } from "../todoSlice";
+import { changeViewFlag } from "../todoSlice";
+import { ViewFlag } from "../types";
 import TodoItem from "./TodoItem";
+import {selectTodos} from '../utils/selectTodos'
 
 const TodoList: FC = () => {
-  const todos = useAppSelector((state) => state.todos.todos);
+  // const todos = useAppSelector((state) => state.todos.todos);
+  const todos = selectTodos();
+  const viewFlag = useAppSelector((state) => state.todos.viewflag);
   const dispatch = useAppDispatch();
+
+  const handleOnChangeViewFlag = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(changeViewFlag(e.target.value as ViewFlag));
+  };
 
   return (
     <div>
       <hr />
       <label>
         <span>閲覧フラグ：</span>
-        <select name="viewFlag" defaultValue={"explanation"}>
+        <select
+          name="viewFlag"
+          defaultValue={"explanation"}
+          onChange={(e) => handleOnChangeViewFlag(e)}
+        >
           <option value={"explanation"} disabled>
             -- 選択してください --
           </option>

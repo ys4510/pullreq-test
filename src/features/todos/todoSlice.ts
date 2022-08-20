@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { TodoId, Todo, TodoInput } from "./types";
+import { TodoId, Todo, TodoInput, ViewFlag } from "./types";
 import { v4 as uuid4 } from "uuid";
 import getCurrentDateTime from "./utils/getCurrentDateTime";
 
 export type TodoState = {
   todos: Todo[];
+  viewflag: ViewFlag;
 };
 
 const initialState: TodoState = {
@@ -38,6 +39,7 @@ const initialState: TodoState = {
       deletedAt: "",
     },
   ],
+  viewflag: 'all'
 };
 
 export const todoSlice = createSlice({
@@ -70,8 +72,13 @@ export const todoSlice = createSlice({
       const index = state.todos.findIndex((todo) => action.payload === todo.id);
       state.todos[index].deletedAt = "";
     },
+    changeViewFlag: (state, action: PayloadAction<ViewFlag>) => {
+      state.viewflag = action.payload;
+    }
   },
 });
 
-export const { create, update, remove, restore } = todoSlice.actions;
+
+
+export const { create, update, remove, restore, changeViewFlag } = todoSlice.actions;
 export default todoSlice.reducer;
