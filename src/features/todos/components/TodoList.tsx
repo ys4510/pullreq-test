@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { changeViewFlag } from "../todoSlice";
+import { changeViewFlag, fetchTodosAsync } from "../todoSlice";
 import { ViewFlag } from "../types";
 import TodoItem from "./TodoItem";
 import {selectTodos} from '../utils/selectTodos'
+
 
 const TodoList: FC = () => {
   // const todos = useAppSelector((state) => state.todos.todos);
@@ -14,6 +15,7 @@ const TodoList: FC = () => {
   const handleOnChangeViewFlag = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(changeViewFlag(e.target.value as ViewFlag));
   };
+
 
   return (
     <div>
@@ -48,9 +50,14 @@ const TodoList: FC = () => {
           </tr>
         </thead>
         <tbody>
-          {todos.map((todo, index) => (
+          {
+          todos.length 
+          ? todos.map((todo, index) => (
             <TodoItem key={index} todo={todo} />
-          ))}
+          )) 
+          : 
+          (<tr><td colSpan={9}>{'No Data'}</td></tr>)
+          }
         </tbody>
       </table>
     </div>

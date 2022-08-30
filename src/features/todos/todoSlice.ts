@@ -1,45 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice , createAsyncThunk, SerializedError} from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TodoId, Todo, TodoInput, ViewFlag } from "./types";
 import { v4 as uuid4 } from "uuid";
 import getCurrentDateTime from "./utils/getCurrentDateTime";
+import {setLocalStorageTodos, getLocalStorageTodos} from "./localStorage/localStorage";
+import { fetchTodos } from "./api/fetchTodos";
 
 export type TodoState = {
   todos: Todo[];
   viewflag: ViewFlag;
+  isFetching: boolean;
+  error: null | SerializedError;
 };
 
 const initialState: TodoState = {
-  todos: [
-    {
-      id: uuid4(),
-      title: "AAA",
-      body: "AAAAAAAAA",
-      status: "waiting",
-      createdAt: getCurrentDateTime(),
-      updatedAt: "",
-      deletedAt: "",
-    },
-    {
-      id: uuid4(),
-      title: "BBB",
-      body: "BBBBBBB",
-      status: "waiting",
-      createdAt: getCurrentDateTime(),
-      updatedAt: "",
-      deletedAt: "",
-    },
-    {
-      id: uuid4(),
-      title: "CCC",
-      body: "CCCCCCC",
-      status: "waiting",
-      createdAt: getCurrentDateTime(),
-      updatedAt: "",
-      deletedAt: "",
-    },
-  ],
-  viewflag: 'all'
+  todos: [],
+  viewflag: 'all',
+  isFetching: false,
+  error: null,
 };
 
 export const todoSlice = createSlice({
@@ -57,28 +35,54 @@ export const todoSlice = createSlice({
         deletedAt: "",
       };
       state.todos.push(newTodo);
+      setLocalStorageTodos(state.todos);
+
     },
     update: (state, action: PayloadAction<Todo>) => {
       const index = state.todos.findIndex(
         (todo) => action.payload.id === todo.id
       );
       state.todos[index] = action.payload;
+      setLocalStorageTodos(state.todos);
     },
     remove: (state, action: PayloadAction<TodoId>) => {
       const index = state.todos.findIndex((todo) => action.payload === todo.id);
       state.todos[index].deletedAt = getCurrentDateTime();
+      setLocalStorageTodos(state.todos);
     },
     restore: (state, action: PayloadAction<TodoId>) => {
       const index = state.todos.findIndex((todo) => action.payload === todo.id);
       state.todos[index].deletedAt = "";
+      setLocalStorageTodos(state.todos);
     },
     changeViewFlag: (state, action: PayloadAction<ViewFlag>) => {
       state.viewflag = action.payload;
-    }
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+    .addCase(fetchTodosAsync.pending, (state) => {
+      state.isFetching = true;
+    })
+    .addCase(fetchTodosAsync.fulfilled, (state, action: PayloadAction<Todo[]>) => {
+      state.isFetching = false;
+      state.error = null;
+      state.todos = action.payload;
+    })
+    .addCase(fetchTodosAsync.rejected, (state, action) => {
+      state.isFetching = false;
+      state.error = action.error;
+    })
   },
 });
 
-
+export const fetchTodosAsync = createAsyncThunk<Todo[]>(
+  `${todoSlice.name}/fetchTodosAsync`,
+  async () => {
+    const response = await fetchTodos();
+    return response.data;
+  }
+);
 
 export const { create, update, remove, restore, changeViewFlag } = todoSlice.actions;
 export default todoSlice.reducer;
