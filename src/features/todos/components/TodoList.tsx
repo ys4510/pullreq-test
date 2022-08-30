@@ -16,7 +16,6 @@ const TodoList: FC = () => {
     dispatch(changeViewFlag(e.target.value as ViewFlag));
   };
 
-
   return (
     <div>
       <hr />
