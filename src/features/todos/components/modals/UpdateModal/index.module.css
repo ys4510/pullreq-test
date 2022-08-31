@@ -1,17 +1,26 @@
 .modalWindow {
-  width: 300px;
-  height: 120px;
+  min-width: 50vw;
+  min-height: 30vh;
   background-color: #fff;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   animation: fadein .4s;
+  padding: 8px;
 }
 
 .modalWindow button {
   margin: 8px;
 }
 
+input {
+  margin-bottom: 12px;
+  min-width: 30vw;
+}
+
+select {
+  min-width: 31vw;
+}
 button + button {
 background-color: rgb(173, 56, 58);
 color: white;

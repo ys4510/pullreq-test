@@ -12,7 +12,7 @@ export const fetchTodos = async(): Promise<T> => {
       setTimeout(() => {
         resolve({data: todos})
       }
-      , 1000);
+      , 500);
     }
   );
 

@@ -1,8 +1,11 @@
 import { FC } from "react";
 import { useAppDispatch } from "../../../app/hooks";
-import { Todo, TodoUpdate } from "../types";
-import { update, remove, restore } from "../todoSlice";
-import getCurrentDateTime from "../utils/getCurrentDateTime";
+import { Todo, TodoId, TodoUpdate } from "../types";
+import {
+  toggleShowConfirmModal,
+  toggleShowUpdateModal,
+  setSelectedTodId,
+} from "../todoSlice";
 
 type Props = {
   key: number;
@@ -13,12 +16,20 @@ const TodoItem: FC<Props> = ({ todo }) => {
   const dispatch = useAppDispatch();
 
   const handleOnClickUpdate = () => {
-    dispatch(update({...todo, updatedAt: getCurrentDateTime()}));
+    dispatch(setSelectedTodId(todo.id));
+    dispatch(toggleShowUpdateModal());
   };
 
-  const handleOnClickDelete = () => {
-    dispatch(remove(todo.id));
-  }
+  const handleOnClickDelete = (id: TodoId) => {
+    dispatch(setSelectedTodId(todo.id));
+    dispatch(toggleShowConfirmModal());
+  };
+
+  const handleOnClickRestore = (id: TodoId) => {
+    dispatch(setSelectedTodId(todo.id));
+    dispatch(toggleShowConfirmModal());
+  };
+
   return (
     <tr>
       <td>{todo.id}</td>
@@ -26,19 +37,24 @@ const TodoItem: FC<Props> = ({ todo }) => {
       <td>{todo.body}</td>
       <td>{todo.status}</td>
       <td>{todo.createdAt}</td>
-      <td>{todo.updatedAt ? todo.updatedAt : "なし" }</td>
-      <td>{todo.deletedAt? todo.deletedAt : "なし" }</td>
+      <td>{todo.updatedAt ? todo.updatedAt : "なし"}</td>
+      <td>{todo.deletedAt ? todo.deletedAt : "なし"}</td>
       <td>
-        <button onClick={handleOnClickUpdate} disabled={todo.deletedAt ? true : false}>更新</button>
+        <button
+          onClick={handleOnClickUpdate}
+          disabled={todo.deletedAt ? true : false}
+        >
+          更新
+        </button>
       </td>
-      <td>{
-        todo.deletedAt 
-        ?
-        <button onClick={() => dispatch(restore(todo.id))}>削除取消</button>
-        :
-        <button onClick={() => dispatch(remove(todo.id))}>削除</button>
-
-        }
+      <td>
+        {todo.deletedAt ? (
+          <button onClick={() => handleOnClickRestore(todo.id)}>
+            削除取消
+          </button>
+        ) : (
+          <button onClick={() => handleOnClickDelete(todo.id)}>削除</button>
+        )}
       </td>
     </tr>
   );

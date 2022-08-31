@@ -1,16 +1,21 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import styles from "./index.module.css";
+import { useAppSelector } from "../../../../../app/hooks";
+import DeleteModal from "../DeleteModal";
+import UpdateModal from "../UpdateModal"
 
-type Props = {
-  children: ReactNode;
-  isModalOpen: boolean;
-};
+const BaseModal: FC = () => {
+  const showComfirmModal = useAppSelector(
+    (state) => state.todos.showComfirmModal
+  );
+  const showUpdateModal = useAppSelector(
+    (state) => state.todos.showUpdateModal
+  );
 
-const BaseModal: FC<Props> = ({ children, isModalOpen }) => {
-  if (!isModalOpen) return (<></>);
+  const TSX = showComfirmModal ? <DeleteModal /> : showUpdateModal ? <UpdateModal /> : '';
   return (
     <div className={styles.modal}>
-      <div>{children}</div>
+      {TSX}
     </div>
   );
 };

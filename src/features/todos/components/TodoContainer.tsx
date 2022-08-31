@@ -4,13 +4,18 @@ import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import { fetchTodosAsync } from "../todoSlice";
 import BaseModal from "./modals/BaseModal";
-import DeleteModal from "./modals/DeleteModal";
+import ViewFlagSelector from "./ViewFlagSelector";
 
 const TodoContainer: FC = () => {
   const isFetching = useAppSelector((state) => state.todos.isFetching);
-  const dispatch = useAppDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showComfirmModal = useAppSelector(
+    (state) => state.todos.showComfirmModal
+  );
+  const showUpdateModal = useAppSelector(
+    (state) => state.todos.showUpdateModal
+  );
 
+  const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchTodosAsync());
   }, []);
@@ -19,10 +24,9 @@ const TodoContainer: FC = () => {
 
   return (
     <>
-      <BaseModal isModalOpen={isModalOpen}>
-        <DeleteModal />
-      </BaseModal>
+      {showComfirmModal || showUpdateModal ? <BaseModal /> : ""}
       <TodoForm />
+      <ViewFlagSelector />
       <TodoList />
     </>
   );

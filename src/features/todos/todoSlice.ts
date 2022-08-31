@@ -1,9 +1,13 @@
-import { createSlice , createAsyncThunk, SerializedError} from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  SerializedError,
+} from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TodoId, Todo, TodoInput, ViewFlag } from "./types";
 import { v4 as uuid4 } from "uuid";
 import getCurrentDateTime from "./utils/getCurrentDateTime";
-import {setLocalStorageTodos, getLocalStorageTodos} from "./localStorage/localStorage";
+import { setLocalStorageTodos } from "./localStorage/localStorage";
 import { fetchTodos } from "./api/fetchTodos";
 
 export type TodoState = {
@@ -11,13 +15,19 @@ export type TodoState = {
   viewflag: ViewFlag;
   isFetching: boolean;
   error: null | SerializedError;
+  showComfirmModal: boolean;
+  showUpdateModal: boolean;
+  selectedTodoId: TodoId;
 };
 
 const initialState: TodoState = {
   todos: [],
-  viewflag: 'all',
+  viewflag: "all",
   isFetching: false,
   error: null,
+  showUpdateModal: false,
+  showComfirmModal: false,
+  selectedTodoId: "",
 };
 
 export const todoSlice = createSlice({
@@ -36,7 +46,6 @@ export const todoSlice = createSlice({
       };
       state.todos.push(newTodo);
       setLocalStorageTodos(state.todos);
-
     },
     update: (state, action: PayloadAction<Todo>) => {
       const index = state.todos.findIndex(
@@ -58,21 +67,36 @@ export const todoSlice = createSlice({
     changeViewFlag: (state, action: PayloadAction<ViewFlag>) => {
       state.viewflag = action.payload;
     },
+    toggleShowConfirmModal: (state) => {
+      console.log("toggleDeleteModal");
+      state.showComfirmModal = !state.showComfirmModal;
+    },
+    toggleShowUpdateModal: (state) => {
+      console.log("toggleUpdateModal");
+      state.showUpdateModal = !state.showUpdateModal;
+    },
+    setSelectedTodId: (state, action: PayloadAction<TodoId>) => {
+      console.log("setSelectedTodId");
+      state.selectedTodoId = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
-    .addCase(fetchTodosAsync.pending, (state) => {
-      state.isFetching = true;
-    })
-    .addCase(fetchTodosAsync.fulfilled, (state, action: PayloadAction<Todo[]>) => {
-      state.isFetching = false;
-      state.error = null;
-      state.todos = action.payload;
-    })
-    .addCase(fetchTodosAsync.rejected, (state, action) => {
-      state.isFetching = false;
-      state.error = action.error;
-    })
+      .addCase(fetchTodosAsync.pending, (state) => {
+        state.isFetching = true;
+      })
+      .addCase(
+        fetchTodosAsync.fulfilled,
+        (state, action: PayloadAction<Todo[]>) => {
+          state.isFetching = false;
+          state.error = null;
+          state.todos = action.payload;
+        }
+      )
+      .addCase(fetchTodosAsync.rejected, (state, action) => {
+        state.isFetching = false;
+        state.error = action.error;
+      });
   },
 });
 
@@ -84,5 +108,14 @@ export const fetchTodosAsync = createAsyncThunk<Todo[]>(
   }
 );
 
-export const { create, update, remove, restore, changeViewFlag } = todoSlice.actions;
+export const {
+  create,
+  update,
+  remove,
+  restore,
+  changeViewFlag,
+  toggleShowConfirmModal,
+  toggleShowUpdateModal,
+  setSelectedTodId,
+} = todoSlice.actions;
 export default todoSlice.reducer;
