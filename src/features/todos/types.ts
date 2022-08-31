@@ -9,7 +9,7 @@ export const TODO_STATUSES = [
   "discontinued",
   "completed",
 ] as const;
-type TodoStatus = typeof TODO_STATUSES[number];
+export type TodoStatus = typeof TODO_STATUSES[number];
 
 export type Todo = {
   id: TodoId;

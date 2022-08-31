@@ -7,7 +7,7 @@ import {
   setSelectedTodId,
   changeClickedButton,
 } from "../todoSlice";
-
+import getTodoStatusValue from '../utils/getTodoStatusValue'
 type Props = {
   key: number;
   todo: Todo;
@@ -39,7 +39,7 @@ const TodoItem: FC<Props> = ({ todo }) => {
       <td>{todo.id}</td>
       <td>{todo.title}</td>
       <td>{todo.body}</td>
-      <td>{todo.status}</td>
+      <td>{getTodoStatusValue(todo.status)}</td>
       <td>{todo.createdAt}</td>
       <td>{todo.updatedAt ? todo.updatedAt : "なし"}</td>
       <td>{todo.deletedAt ? todo.deletedAt : "なし"}</td>

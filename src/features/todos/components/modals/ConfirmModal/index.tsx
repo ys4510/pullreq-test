@@ -33,7 +33,7 @@ const ConfirmModal: FC = () => {
   if(btnType==='restore') {
     return (
       <div className={styles.modalWindow}>
-        <p>{"タスクを復元しますか？"}</p>
+        <p>{"削除を取り消しますか？"}</p>
         <div>
           <button onClick={() => dispatch(toggleShowConfirmModal())}>
             いいえ
@@ -44,7 +44,7 @@ const ConfirmModal: FC = () => {
               dispatch(toggleShowConfirmModal());
             }}
           >
-            復元
+            削除取消し
           </button>
         </div>
       </div>
