@@ -26,10 +26,12 @@ export type TodoInput = {
   body: string;
 };
 
-export type TodoUpdate = {
-  id: TodoId;
-  input: Partial<Todo>;
-};
+// export type TodoUpdate = {
+//   id: TodoId;
+//   input: Partial<Todo>;
+// };
 
 const VIEW_STATUSES = ["all", "updated", "deleted"] as const;
 export type ViewFlag = typeof VIEW_STATUSES[number];
+const BUTTON_TYPES = ["update", "delete", "restore"] as const;
+export type buttonTypes = typeof BUTTON_TYPES[number];

@@ -1,8 +1,8 @@
 import { FC } from "react";
 import styles from "./index.module.css";
 import { useAppSelector } from "../../../../../app/hooks";
-import DeleteModal from "../DeleteModal";
 import UpdateModal from "../UpdateModal"
+import ConfirmModal from "../ConfirmModal"
 
 const BaseModal: FC = () => {
   const showComfirmModal = useAppSelector(
@@ -12,7 +12,7 @@ const BaseModal: FC = () => {
     (state) => state.todos.showUpdateModal
   );
 
-  const TSX = showComfirmModal ? <DeleteModal /> : showUpdateModal ? <UpdateModal /> : '';
+  const TSX = showComfirmModal ? <ConfirmModal /> : showUpdateModal ? <UpdateModal /> : '';
   return (
     <div className={styles.modal}>
       {TSX}

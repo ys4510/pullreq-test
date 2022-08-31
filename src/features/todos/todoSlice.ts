@@ -4,7 +4,7 @@ import {
   SerializedError,
 } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { TodoId, Todo, TodoInput, ViewFlag } from "./types";
+import { TodoId, Todo, TodoInput, ViewFlag, buttonTypes } from "./types";
 import { v4 as uuid4 } from "uuid";
 import getCurrentDateTime from "./utils/getCurrentDateTime";
 import { setLocalStorageTodos } from "./localStorage/localStorage";
@@ -18,6 +18,7 @@ export type TodoState = {
   showComfirmModal: boolean;
   showUpdateModal: boolean;
   selectedTodoId: TodoId;
+  clickedButton: buttonTypes | null;
 };
 
 const initialState: TodoState = {
@@ -28,6 +29,7 @@ const initialState: TodoState = {
   showUpdateModal: false,
   showComfirmModal: false,
   selectedTodoId: "",
+  clickedButton: null
 };
 
 export const todoSlice = createSlice({
@@ -67,16 +69,16 @@ export const todoSlice = createSlice({
     changeViewFlag: (state, action: PayloadAction<ViewFlag>) => {
       state.viewflag = action.payload;
     },
+    changeClickedButton: (state, action: PayloadAction<buttonTypes>) => {
+      state.clickedButton = action.payload;
+    },
     toggleShowConfirmModal: (state) => {
-      console.log("toggleDeleteModal");
       state.showComfirmModal = !state.showComfirmModal;
     },
     toggleShowUpdateModal: (state) => {
-      console.log("toggleUpdateModal");
       state.showUpdateModal = !state.showUpdateModal;
     },
     setSelectedTodId: (state, action: PayloadAction<TodoId>) => {
-      console.log("setSelectedTodId");
       state.selectedTodoId = action.payload;
     },
   },
@@ -114,6 +116,7 @@ export const {
   remove,
   restore,
   changeViewFlag,
+  changeClickedButton,
   toggleShowConfirmModal,
   toggleShowUpdateModal,
   setSelectedTodId,

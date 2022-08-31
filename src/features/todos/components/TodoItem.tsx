@@ -1,10 +1,11 @@
 import { FC } from "react";
 import { useAppDispatch } from "../../../app/hooks";
-import { Todo, TodoId, TodoUpdate } from "../types";
+import { Todo, TodoId } from "../types";
 import {
   toggleShowConfirmModal,
   toggleShowUpdateModal,
   setSelectedTodId,
+  changeClickedButton,
 } from "../todoSlice";
 
 type Props = {
@@ -18,16 +19,19 @@ const TodoItem: FC<Props> = ({ todo }) => {
   const handleOnClickUpdate = () => {
     dispatch(setSelectedTodId(todo.id));
     dispatch(toggleShowUpdateModal());
+    dispatch(changeClickedButton("update"));
   };
 
   const handleOnClickDelete = (id: TodoId) => {
     dispatch(setSelectedTodId(todo.id));
     dispatch(toggleShowConfirmModal());
+    dispatch(changeClickedButton("delete"));
   };
 
   const handleOnClickRestore = (id: TodoId) => {
     dispatch(setSelectedTodId(todo.id));
     dispatch(toggleShowConfirmModal());
+    dispatch(changeClickedButton("restore"));
   };
 
   return (
