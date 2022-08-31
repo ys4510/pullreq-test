@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch } from "../../../app/hooks";
 import { changeViewFlag } from "../todoSlice";
-import { ViewFlag } from "../types";
+import { ViewFlag, VIEW_STATUSES } from "../types";
 
 const ViewFlagSelector = () => {
   const dispatch = useAppDispatch();
   const handleOnChangeViewFlag = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(changeViewFlag(e.target.value as ViewFlag));
   };
+  const viewStatusArr = Object.entries(VIEW_STATUSES);
+
   return (
     <>
       <hr />
@@ -21,9 +23,14 @@ const ViewFlagSelector = () => {
           <option value={"explanation"} disabled>
             {"-- 選択してください --"}
           </option>
-          <option value={"all"}>全て（削除済みを除く）</option>
+          {viewStatusArr.map(([key, value]) => (
+            <option key={key} value={key}>
+              {value}
+            </option>
+          ))}
+          {/* <option value={"all"}>全て（削除済みを除く）</option>
           <option value={"updated"}>更新済み（削除済みを除く）</option>
-          <option value={"deleted"}>削除済み</option>
+          <option value={"deleted"}>削除済み</option> */}
         </select>
       </label>
     </>

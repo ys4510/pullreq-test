@@ -12,7 +12,7 @@ import { fetchTodos } from "./api/fetchTodos";
 
 export type TodoState = {
   todos: Todo[];
-  viewflag: ViewFlag;
+  viewflag: ViewFlag | null;
   isFetching: boolean;
   error: null | SerializedError;
   showComfirmModal: boolean;
@@ -23,7 +23,7 @@ export type TodoState = {
 
 const initialState: TodoState = {
   todos: [],
-  viewflag: "all",
+  viewflag: null,
   isFetching: false,
   error: null,
   showUpdateModal: false,

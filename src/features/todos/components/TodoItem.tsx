@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useAppDispatch } from "../../../app/hooks";
-import { Todo, TodoId } from "../types";
+import { Todo, TodoId, TODO_STATUSES} from "../types";
 import {
   toggleShowConfirmModal,
   toggleShowUpdateModal,
