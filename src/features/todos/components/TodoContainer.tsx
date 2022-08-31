@@ -20,11 +20,24 @@ const TodoContainer: FC = () => {
     dispatch(fetchTodosAsync());
   }, []);
 
-  if (isFetching) return <div style={{ textAlign: "left" }}>loading...</div>;
+  if (isFetching)
+    return (
+      <div
+        style={{
+          textAlign: "left",
+          fontFamily: "cursive",
+          fontSize: "2rem",
+          margin: "30px",
+        }}
+      >
+        loading...
+      </div>
+    );
 
   return (
     <>
       {showComfirmModal || showUpdateModal ? <BaseModal /> : ""}
+      <h2 className="appName">To Do App</h2>
       <TodoForm />
       <ViewFlagSelector />
       <TodoList />

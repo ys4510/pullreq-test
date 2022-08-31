@@ -1,8 +1,8 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  padding: 0 16px;
 }
 
 #todoForm {
@@ -15,5 +15,10 @@
 
 #btnSubmit {
   align-self:flex-end;
+  margin-left: 16px;
 }
 
+.appName {
+  margin: 0;
+  line-height: 2.4rem;
+}

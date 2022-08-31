@@ -5,26 +5,16 @@
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  animation: fadein .4s;
-  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  animation: fadein .9s;
+  padding: 16px;
 }
 
 .modalWindow button {
   margin: 8px;
 }
 
-input {
-  margin-bottom: 12px;
-  min-width: 30vw;
-}
-
-select {
-  min-width: 31vw;
-}
-button + button {
-background-color: rgb(173, 56, 58);
-color: white;
-}
 
 @keyframes fadein {
   0% {

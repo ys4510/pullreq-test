@@ -40,6 +40,7 @@ const UpdateModal: FC = () => {
       <label>
         <span>タイトル：</span>
         <input
+          className="inputBox"
           type="text"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
@@ -48,6 +49,7 @@ const UpdateModal: FC = () => {
       <label>
         <span>本文：</span>
         <input
+          className="inputBox"
           type="text"
           value={newBody}
           onChange={(e) => setNewBody(e.target.value)}
@@ -57,6 +59,7 @@ const UpdateModal: FC = () => {
         <span>ステータス：</span>
 
         <select
+          className="selectList"
           name="viewFlag"
           defaultValue={newStatus}
           onChange={onChangeStatus}
