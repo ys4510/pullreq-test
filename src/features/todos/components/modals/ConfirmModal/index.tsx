@@ -2,7 +2,6 @@ import { FC } from "react";
 import styles from "./index.module.css";
 import { remove, restore, toggleShowConfirmModal } from "../../../todoSlice";
 import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
-// import { changeClickedButton } from "../../../todoSlice";
 
 const ConfirmModal: FC = () => {
   const dispatch = useAppDispatch();

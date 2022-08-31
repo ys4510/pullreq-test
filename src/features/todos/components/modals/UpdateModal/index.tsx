@@ -1,9 +1,9 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import styles from "./index.module.css";
 import { toggleShowUpdateModal, update } from "../../../todoSlice";
 import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
 import getCurrentDateTime from "../../../utils/getCurrentDateTime";
-import { Todo } from "../../../types";
+import {TodoStatus} from '../../../types';
 
 const UpdateModal: FC = () => {
   const dispatch = useAppDispatch();
@@ -17,12 +17,12 @@ const UpdateModal: FC = () => {
   const [newBody, setNewBody] = useState(todo.body);
   const [newStatus, setNewStatus] = useState(todo.status);
 
-  const onChangeStatus = (e) => {
-    setNewStatus(e.target.value);
+  const onChangeStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedStatus = e.target.value as TodoStatus;
+    setNewStatus(selectedStatus);
   };
 
   const onClickOK = () => {
-    console.log("todo: ", todo);
     dispatch(
       update({
         ...todo,
@@ -62,7 +62,7 @@ const UpdateModal: FC = () => {
           className="selectList"
           name="viewFlag"
           defaultValue={newStatus}
-          onChange={onChangeStatus}
+          onChange={(e)=>onChangeStatus(e)}
         >
           <option value={"waiting"}>未着手</option>
           <option value={"working"}>着手中</option>
