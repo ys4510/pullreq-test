@@ -1,9 +1,8 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import styles from "./index.module.css";
 import { toggleShowUpdateModal, update } from "../../../todoSlice";
 import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
 import getCurrentDateTime from "../../../utils/getCurrentDateTime";
-import { Todo } from "../../../types";
 
 const UpdateModal: FC = () => {
   const dispatch = useAppDispatch();
@@ -62,7 +61,7 @@ const UpdateModal: FC = () => {
           className="selectList"
           name="viewFlag"
           defaultValue={newStatus}
-          onChange={onChangeStatus}
+          onChange={()=>onChangeStatus}
         >
           <option value={"waiting"}>未着手</option>
           <option value={"working"}>着手中</option>
