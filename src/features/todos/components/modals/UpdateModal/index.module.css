@@ -1,0 +1,26 @@
+.modalWindow {
+  min-width: 50vw;
+  min-height: 30vh;
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fadein .9s;
+  padding: 16px;
+}
+
+.modalWindow button {
+  margin: 8px;
+}
+
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
