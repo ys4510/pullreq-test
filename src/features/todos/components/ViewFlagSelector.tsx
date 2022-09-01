@@ -11,7 +11,7 @@ const ViewFlagSelector = () => {
   const viewStatusArr = Object.entries(VIEW_STATUSES);
 
   return (
-    <>
+    <div>
       <hr />
       <label>
         <span>閲覧フラグ：</span>
@@ -33,7 +33,7 @@ const ViewFlagSelector = () => {
           <option value={"deleted"}>削除済み</option> */}
         </select>
       </label>
-    </>
+    </div>
   );
 };
 
