@@ -7,7 +7,7 @@ const TodoList: FC = () => {
   const todos = selectTodos();
 
   return (
-    <div>
+    <div className="wapper">
       <table>
         <thead>
           <tr>
